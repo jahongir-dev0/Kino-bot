@@ -52,7 +52,7 @@ async def search_by_code(message: types.Message, state: FSMContext):
         if code == film['code'].lower():
             await message.answer_video(
                 video=film["file_id"],
-                caption=f"<b>{film['title']}</b>\nDavlat: {film['country']}\nYil: {film['year']}\nDavomiylik: {film['duration']}\nKod: <code>{film['code']}</code>"
+                caption=f"<b>{film['title']}</b>\n🌍 Davlat: {film['country']}\n📅 Yil: {film['year']}\n⏱ Davomiylik: {film['duration']}\n🔐 Kod: <code>{film['code']}</code>"
             )
             await state.finish()
             return
