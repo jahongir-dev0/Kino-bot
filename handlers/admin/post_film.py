@@ -6,7 +6,7 @@ from data.config import ADMINS
 from states.post_film import PostFilm
 
 FILM_JSON_PATH = "data/films.json"
-CHANNEL_USERNAME = "@mymusics_fr"
+CHANNEL_USERNAME = "@testovykanalfilm"
 
 def get_film_by_code(code):
     try:
