@@ -1,0 +1,35 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Venv (virtual environment)
+.venv/
+env/
+venv/
+ENV/
+env.bak/
+
+# IDE'lar
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Env file (BOT_TOKEN, ADMINS, IP, va h.k.)
+.env
+
+# SQLite DB
+*.db
+
+# __files__ json or temporary
+*.json
+
+# Telegram media cache (agar qo‘shilsa)
+downloads/
+media/
