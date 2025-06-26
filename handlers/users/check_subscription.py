@@ -1,31 +1,16 @@
 from aiogram import types
-from aiogram.dispatcher import FSMContext
+from aiogram.utils.exceptions import MessageNotModified
 from loader import dp, bot
 from data.config import ADMINS
-from utils.db_api.channel import get_channels
+from utils.user import check_user_subscriptions
 from keyboards.inline.subscription import check_channels_keyboard
 from keyboards.inline.menu import main_menu
-from aiogram.utils.exceptions import MessageNotModified
-
-async def check_user_subscriptions(user_id):
-    result = []
-    for ch in get_channels():
-        try:
-            member = await bot.get_chat_member(ch, user_id)
-            if member.status not in ("member", "creator", "administrator"):
-                result.append(False)
-            else:
-                result.append(True)
-        except:
-            result.append(False)
-    return all(result)
-
 
 @dp.callback_query_handler(text="check_subs")
-async def recheck_subscription(call: types.CallbackQuery, state: FSMContext):
-    await call.answer(cache_time=2)
+async def recheck_subscription(call: types.CallbackQuery):
     user_id = call.from_user.id
-    if not await check_user_subscriptions(user_id):
+    is_subscribed = await check_user_subscriptions(bot, user_id)
+    if not is_subscribed:
         try:
             await call.message.edit_text("❗ Obuna hali ham tekshirilmagan. Kanallarga obuna bo‘ling:", reply_markup=check_channels_keyboard())
         except MessageNotModified:

@@ -4,17 +4,20 @@ from loader import dp, bot
 from data.config import ADMINS
 from states.request_film import RequestFilm
 
-
 @dp.callback_query_handler(text="request")
 async def request_film_start(call: types.CallbackQuery):
-    await call.message.edit_text("📩 Iltimos, qaysi filmni qidirayotganingizni yozing:")
+    await call.message.edit_text("📩 Qaysi filmni qidirayotganingizni yozing:")
     await RequestFilm.waiting_text.set()
-
 
 @dp.message_handler(state=RequestFilm.waiting_text)
 async def receive_request_text(message: types.Message, state: FSMContext):
     user = message.from_user
-    text = f"📩 <b>Film so‘rovi:</b>\n\n👤 <b>{user.full_name}</b> (@{user.username})\n🆔 <code>{user.id}</code>\n\n📝 {message.text}"
+    text = (
+        f"📩 <b>Film so‘rovi:</b>\n\n"
+        f"👤 <b>{user.full_name}</b> (@{user.username})\n"
+        f"🆔 <code>{user.id}</code>\n\n"
+        f"📝 {message.text}"
+    )
 
     for admin_id in ADMINS:
         try:
